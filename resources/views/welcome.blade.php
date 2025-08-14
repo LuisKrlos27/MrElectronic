@@ -25,7 +25,7 @@
         </div>
         <div class="navbar-center hidden lg:flex">
             <ul class="menu menu-horizontal px-1">
-                <li><a>Inventario</a></li>
+                <li><a href="{{ route('productos.index') }}">Inventario</a></li>
                 <li><a>Ventas</a></li>
             </ul>
         </div>

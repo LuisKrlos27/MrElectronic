@@ -9,14 +9,26 @@ class Producto extends Model
     protected $table = 'productos';
 
     protected $fillable = [
-        'marca_id', 'modelo_id', 'precio', 'cantidad',
-        'numero_pieza', 'descripcion'
+        'tipo_id',       
+        'marca_id',
+        'modelo_id',
+        'pulgada_id',
+        'precio',
+        'cantidad',
+        'numero_pieza',
+        'descripcion'
     ];
 
     protected $casts = [
-        'precio'   => 'decimal:2',
+        'precio' => 'decimal:2',
         'cantidad' => 'integer',
     ];
+
+    // Relaciones
+    public function tipo()
+    {
+        return $this->belongsTo(Tipo::class, 'tipo_id');
+    }
 
     public function marca()
     {
@@ -28,12 +40,16 @@ class Producto extends Model
         return $this->belongsTo(Modelo::class, 'modelo_id');
     }
 
+    public function pulgada()
+    {
+        return $this->belongsTo(Pulgada::class, 'pulgada_id');
+    }
+
     public function procesos()
     {
         return $this->hasMany(Proceso::class, 'producto_id');
     }
 
-    // Relación many-to-many con ventas vía detalle_ventas
     public function ventas()
     {
         return $this->belongsToMany(Venta::class, 'detalle_ventas', 'producto_id', 'venta_id')
