@@ -25,7 +25,7 @@
         <a href="{{ route('productos.create') }}" class="font-bold btn btn-outline btn-success">REGISTRAR</a>
     </div>
 
-    @if($productos->isEmpty())
+    @if($producto->isEmpty())
         <p class="text-center text-gray-600">No hay productos registrados.</p>
     @else
         <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
@@ -49,7 +49,7 @@
                         <tr>
                             <td>{{ $pro->id }}</td>
                             <td>{{ $pro->tipo->nombre ?? 'N/A' }}</td>
-                            <td>{{ $pro->pulgada->valor ?? 'N/A' }}</td>
+                            <td>{{ $pro->pulgada->medida ?? 'N/A' }}</td>
                             <td>{{ $pro->marca->nombre ?? 'N/A' }}</td>
                             <td>{{ $pro->modelo->nombre ?? 'N/A' }}</td>
                             <td>{{ number_format($pro->precio, 2) }}</td>
