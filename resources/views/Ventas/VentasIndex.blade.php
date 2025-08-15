@@ -46,8 +46,8 @@
                             <td>{{ $ven->id }}</td>
                             <td>{{ $ven->cliente->nombre ?? 'N/A' }}</td>
                             <td>{{ $ven->fecha_venta ?? 'N/A' }}</td>
-                            <td>{{ number_format($ven->pago,2) }}</td>
-                            <td>{{ number_format($ven->total,2) }}</td>
+                            <td>${{ number_format($ven->pago,0,2) }}</td>
+                            <td>${{ number_format($ven->total,0,2) }}</td>
                             <td class="flex flex-col sm:flex-row gap-1">
                                 <a href="{{ route('ventas.show', $ven->id) }}" class="font-bold btn-sm btn btn-outline btn-info">Ver factura</a>
                                 <a href="{{ route('ventas.edit', $ven->id) }}" class="font-bold btn-sm btn btn-outline btn-warning">Editar</a>

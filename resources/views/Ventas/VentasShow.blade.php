@@ -37,8 +37,8 @@
                         <tr class="hover:bg-gray-50">
                             <td class="px-4 py-2 border-b text-gray-800">{{ $detalle->producto->tipo->nombre }} - {{ $detalle->producto->marca->nombre }} - {{ $detalle->producto->modelo->nombre }}</td>
                             <td class="px-4 py-2 border-b text-center text-gray-800">{{ $detalle->cantidad }}</td>
-                            <td class="px-4 py-2 border-b text-right text-gray-800">${{ number_format($detalle->precio_unitario, 2) }}</td>
-                            <td class="px-4 py-2 border-b text-right text-gray-800">${{ number_format($detalle->subtotal, 2) }}</td>
+                            <td class="px-4 py-2 border-b text-right text-gray-800">${{ number_format($detalle->precio_unitario,0, 2) }}</td>
+                            <td class="px-4 py-2 border-b text-right text-gray-800">${{ number_format($detalle->subtotal,0, 2) }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -49,9 +49,9 @@
     <!-- Totales -->
     <div class="flex flex-col md:flex-row justify-end md:space-x-12 text-gray-800 text-lg font-semibold">
         <div class="space-y-1 text-right">
-            <p>Total: <span class="text-green-600">${{ number_format($venta->total, 2) }}</span></p>
-            <p>Pago: <span class="text-blue-600">${{ number_format($venta->pago, 2) }}</span></p>
-            <p>Cambio: <span class="text-purple-600">${{ number_format($venta->cambio, 2) }}</span></p>
+            <p>Total: <span class="text-green-600">${{ number_format($venta->total,0, 2) }}</span></p>
+            <p>Pago: <span class="text-blue-600">${{ number_format($venta->pago,0, 2) }}</span></p>
+            <p>Cambio: <span class="text-purple-600">${{ number_format($venta->cambio,0, 2) }}</span></p>
         </div>
     </div>
 

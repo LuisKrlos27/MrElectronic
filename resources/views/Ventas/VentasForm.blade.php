@@ -48,13 +48,13 @@
                         <option value="">Selecciona un producto</option>
                         @foreach($producto as $pro)
                             <option value="{{ $pro->id }}" data-precio="{{ $pro->precio }}">
-                                {{ $pro->descripcion }} - {{ $pro->marca->nombre }} - {{ $pro->modelo->nombre }} (Stock: {{ $pro->cantidad }})
+                                {{ $pro->tipo->nombre }} - {{ $pro->marca->nombre }} - {{ $pro->modelo->nombre }} (Stock: {{ $pro->cantidad }})
                             </option>
                         @endforeach
                     </select>
                     <input type="number" name="productos[0][cantidad]" min="1" class="input input-bordered w-full cantidad_input" placeholder="Cantidad" required>
-                    <input type="number" name="productos[0][precio_unitario]" step="0.01" class="input input-bordered w-full precio_input" placeholder="Precio unitario" disabled required>
-                    <input type="number" name="productos[0][subtotal]" step="0.01" class="input input-bordered w-full subtotal_input" placeholder="Subtotal"disabled >
+                    <input type="text" name="productos[0][precio_unitario]" class="input input-bordered w-full precio_input" placeholder="Precio unitario" disabled required>
+                    <input type="text" name="productos[0][subtotal]" class="input input-bordered w-full subtotal_input" placeholder="Subtotal" disabled>
                 </div>
             </div>
 
@@ -76,13 +76,13 @@
         <!-- Total -->
         <div>
             <label class="text-sm font-semibold text-gray-600">Total</label>
-            <input type="number" step="0.01" name="total" class="input input-bordered w-full" id="total_input"disabled >
+            <input type="text" class="input input-bordered w-full" id="total_input" disabled>
         </div>
 
         <!-- Cambio -->
         <div>
             <label class="text-sm font-semibold text-gray-600">Cambio</label>
-            <input type="number" step="0.01" name="cambio" class="input input-bordered w-full" id="cambio_input" disabled>
+            <input type="text" class="input input-bordered w-full" id="cambio_input" disabled>
         </div>
 
         <div class="md:col-span-2 flex justify-center gap-4 pt-4">
@@ -100,21 +100,33 @@ document.addEventListener('DOMContentLoaded', function () {
     const pagoInput = document.getElementById('pago_input');
     const cambioInput = document.getElementById('cambio_input');
 
+    // Función para formatear número como moneda venezolana
+    function formatoMoneda(num) {
+        return '$' + num.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    // Calcular total de la venta
     function recalcularTotal() {
         let total = 0;
         container.querySelectorAll('.subtotal_input').forEach(input => {
-            total += parseFloat(input.value) || 0;
+            const valor = parseFloat(input.dataset.raw) || 0;
+            total += valor;
         });
-        totalInput.value = total.toFixed(2);
+        totalInput.value = formatoMoneda(total);
+        totalInput.dataset.raw = total; // Guardamos valor sin formato
         recalcularCambio();
     }
 
+    // Calcular cambio sin valores negativos
     function recalcularCambio() {
         const pago = parseFloat(pagoInput.value) || 0;
-        const total = parseFloat(totalInput.value) || 0;
-        cambioInput.value = (pago - total).toFixed(2);
+        const total = parseFloat(totalInput.dataset.raw) || 0;
+        let cambio = pago - total;
+        if (cambio < 0) cambio = 0;
+        cambioInput.value = formatoMoneda(cambio);
     }
 
+    // Asignar eventos a una fila de producto
     function bindEvents(row) {
         const selectProducto = row.querySelector('.producto_select');
         const cantidadInput = row.querySelector('.cantidad_input');
@@ -123,23 +135,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
         selectProducto.addEventListener('change', function () {
             const precio = parseFloat(this.options[this.selectedIndex].dataset.precio) || 0;
-            precioInput.value = precio.toFixed(2);
-            subtotalInput.value = ((parseFloat(cantidadInput.value) || 0) * precio).toFixed(2);
+            precioInput.value = formatoMoneda(precio);
+            precioInput.dataset.raw = precio;
+            const subtotal = (parseFloat(cantidadInput.value) || 0) * precio;
+            subtotalInput.value = formatoMoneda(subtotal);
+            subtotalInput.dataset.raw = subtotal;
             recalcularTotal();
         });
 
-        [cantidadInput, precioInput].forEach(input => {
-            input.addEventListener('input', function () {
-                const cantidad = parseFloat(cantidadInput.value) || 0;
-                const precio = parseFloat(precioInput.value) || 0;
-                subtotalInput.value = (cantidad * precio).toFixed(2);
-                recalcularTotal();
-            });
+        cantidadInput.addEventListener('input', function () {
+            const cantidad = parseFloat(cantidadInput.value) || 0;
+            const precio = parseFloat(precioInput.dataset.raw) || 0;
+            const subtotal = cantidad * precio;
+            subtotalInput.value = formatoMoneda(subtotal);
+            subtotalInput.dataset.raw = subtotal;
+            recalcularTotal();
         });
     }
 
+    // Vinculamos la primera fila de producto
     bindEvents(container.querySelector('.producto_item'));
 
+    // Botón para agregar nuevo producto
     document.getElementById('add_producto').addEventListener('click', function () {
         const newRow = document.createElement('div');
         newRow.classList.add('grid', 'grid-cols-1', 'md:grid-cols-4', 'gap-4', 'producto_item');
@@ -148,22 +165,24 @@ document.addEventListener('DOMContentLoaded', function () {
                 <option value="">Selecciona un producto</option>
                 @foreach($producto as $pro)
                     <option value="{{ $pro->id }}" data-precio="{{ $pro->precio }}">
-                        {{ $pro->descripcion }} - {{ $pro->marca->nombre }} - {{ $pro->modelo->nombre }} (Stock: {{ $pro->cantidad }})
+                        {{ $pro->tipo->nombre }} - {{ $pro->marca->nombre }} - {{ $pro->modelo->nombre }} (Stock: {{ $pro->cantidad }})
                     </option>
                 @endforeach
             </select>
             <input type="number" name="productos[${index}][cantidad]" min="1" class="input input-bordered w-full cantidad_input" placeholder="Cantidad" required>
-            <input type="number" name="productos[${index}][precio_unitario]" step="0.01" class="input input-bordered w-full precio_input" placeholder="Precio unitario" disabled required>
-            <input type="number" name="productos[${index}][subtotal]" step="0.01" class="input input-bordered w-full subtotal_input" placeholder="Subtotal" readonly>
+            <input type="text" class="input input-bordered w-full precio_input" placeholder="Precio unitario" disabled data-raw="0">
+            <input type="text" class="input input-bordered w-full subtotal_input" placeholder="Subtotal" disabled data-raw="0">
         `;
         container.appendChild(newRow);
         bindEvents(newRow);
         index++;
     });
 
+    // Evento para recalcular cambio cuando se ingresa el pago
     pagoInput.addEventListener('input', recalcularCambio);
 });
 
+// Mostrar/ocultar campos de nuevo cliente
 function toggleNuevoCliente(select) {
     const fields = document.getElementById('nuevo_cliente_fields');
     fields.classList.toggle('hidden', select.value !== 'nuevo');
