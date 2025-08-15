@@ -49,8 +49,8 @@
                             <td>{{ $cli->telefono ?? 'N/A' }}</td>
                             <td>{{ $cli->direccion ?? 'N/A' }}</td>
                             <td class="flex flex-col sm:flex-row gap-1">
-                                <a href="{{ route('clientes.edit', $pro->id) }}" class="font-bold btn-sm btn btn-outline btn-warning">Editar</a>
-                                <form action="{{ route('clientes.destroy', $pro->id) }}" method="POST" onsubmit="return confirm('¿Estas seguro de eliminar este producto?')">
+                                <a href="{{ route('clientes.edit', $cli->id) }}" class="font-bold btn-sm btn btn-outline btn-warning">Editar</a>
+                                <form action="{{ route('clientes.destroy', $cli->id) }}" method="POST" onsubmit="return confirm('¿Estas seguro de eliminar este producto?')">
                                     @csrf
                                     @method('DELETE')
                                     <button class="font-bold btn-sm btn btn-outline btn-error" type="submit">Eliminar</button>
