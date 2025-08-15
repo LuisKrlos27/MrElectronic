@@ -17,8 +17,9 @@
             <ul
                 tabindex="0"
                 class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                <li><a>Inventario</a></li>
-                <li><a>Ventas</a></li>
+                <li><a href="{{ route('productos.index') }}">Inventario</a></li>
+                <li><a href="{{ route('ventas.index') }}">Ventas</a></li>
+                <li><a href="{{ route('clientes.index') }}">Ventas</a></li>
             </ul>
             </div>
             <a class="btn btn-ghost text-xl">MR ELECTRONICS</a>
@@ -26,7 +27,8 @@
         <div class="navbar-center hidden lg:flex">
             <ul class="menu menu-horizontal px-1">
                 <li><a href="{{ route('productos.index') }}">Inventario</a></li>
-                <li><a>Ventas</a></li>
+                <li><a href="{{ route('ventas.index') }}">Ventas</a></li>
+                <li><a href="{{ route('clientes.index') }}">Clientes</a></li>
             </ul>
         </div>
         <div class="navbar-end">
