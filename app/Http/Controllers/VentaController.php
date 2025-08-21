@@ -125,7 +125,11 @@ class VentaController extends Controller
      */
     public function edit(Venta $venta)
     {
-        //
+        $producto = Producto::all();
+        $cliente = Cliente::all();
+
+        return view('Ventas.VentasEdit', compact('producto','venta','cliente'));
+
     }
 
     /**
@@ -133,14 +137,96 @@ class VentaController extends Controller
      */
     public function update(Request $request, Venta $venta)
     {
-        //
+        // 1. Validar datos básicos
+        $request->validate([
+            'cliente_id' => 'required',
+            'fecha_venta' => 'required|date',
+            'pago' => 'required|numeric|min:0',
+            'productos' => 'required|array|min:1',
+            'productos.*.producto_id' => 'required|exists:productos,id',
+            'productos.*.cantidad' => 'required|numeric|min:1',
+        ]);
+
+        // 2. Crear nuevo cliente si se seleccionó "nuevo"
+        if ($request->cliente_id === 'nuevo') {
+            $request->validate([
+                'nuevo_cliente_nombre' => 'required|string|max:255',
+                'nuevo_cliente_documento' => 'required|string|max:50',
+                'nuevo_cliente_telefono' => 'nullable|string|max:50',
+                'nuevo_cliente_direccion' => 'nullable|string|max:255',
+            ]);
+
+            $cliente = Cliente::create([
+                'nombre' => $request->nuevo_cliente_nombre,
+                'documento' => $request->nuevo_cliente_documento,
+                'telefono' => $request->nuevo_cliente_telefono,
+                'direccion' => $request->nuevo_cliente_direccion,
+            ]);
+            $cliente_id = $cliente->id;
+        } else {
+            $cliente_id = $request->cliente_id;
+        }
+
+        // 3. Revertir stock de los productos anteriores
+        foreach ($venta->detalles as $detalle) {
+            $producto = Producto::findOrFail($detalle->producto_id);
+            $producto->cantidad += $detalle->cantidad; // devolver stock
+            $producto->save();
+        }
+
+        // 4. Eliminar detalles antiguos
+        $venta->detalles()->delete();
+
+        // 5. Calcular nuevo total y cambio
+        $total = 0;
+        foreach ($request->productos as $item) {
+            $producto = Producto::findOrFail($item['producto_id']);
+            $subtotal = $producto->precio * $item['cantidad'];
+            $total += $subtotal;
+        }
+
+        $pago = $request->pago;
+        $cambio = max($pago - $total, 0);
+
+        // 6. Actualizar venta
+        $venta->update([
+            'cliente_id' => $cliente_id,
+            'fecha_venta' => $request->fecha_venta,
+            'total' => $total,
+            'pago' => $pago,
+            'cambio' => $cambio,
+        ]);
+
+        // 7. Crear los nuevos detalles y actualizar stock
+        foreach ($request->productos as $item) {
+            $producto = Producto::findOrFail($item['producto_id']);
+            $subtotal = $producto->precio * $item['cantidad'];
+
+            // Crear detalle
+            $venta->detalles()->create([
+                'producto_id' => $producto->id,
+                'cantidad' => $item['cantidad'],
+                'precio_unitario' => $producto->precio,
+                'subtotal' => $subtotal,
+            ]);
+
+            // Actualizar stock
+            $producto->cantidad -= $item['cantidad'];
+            $producto->save();
+        }
+
+        return redirect()->route('ventas.index')->with('success', 'Venta actualizada correctamente');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Venta $venta)
     {
-        //
+        $venta->delete();
+
+        return redirect()->route('ventas.index')->with('success', 'Venta eliminada correctamente');
+
     }
 }

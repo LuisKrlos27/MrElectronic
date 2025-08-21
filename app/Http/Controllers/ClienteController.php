@@ -22,7 +22,7 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        //
+        return view('Clientes.ClientesForm ');
     }
 
     /**
@@ -30,7 +30,16 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'nombre'=>'required|string',
+            'documento'=>'required|numeric',
+            'telefono'=>'required|numeric',
+            'direccion'=>'required|string'
+        ]);
+
+        Cliente::create($validated);
+
+        return redirect()->route('clientes.index')->with('success','Cliente registrado correctamente');
     }
 
     /**
@@ -46,7 +55,7 @@ class ClienteController extends Controller
      */
     public function edit(Cliente $cliente)
     {
-        //
+        return view('Clientes.ClientesEdit', compact('cliente'));
     }
 
     /**
@@ -54,7 +63,16 @@ class ClienteController extends Controller
      */
     public function update(Request $request, Cliente $cliente)
     {
-        //
+        $validated = $request->validate([
+            'nombre'=>'required|string',
+            'documento'=>'required|numeric',
+            'telefono'=>'required|numeric',
+            'direccion'=>'required|string'
+        ]);
+
+        $cliente->update($validated);
+
+        return redirect()->route('clientes.index')->with('success','Cliente actualizado correctamente');
     }
 
     /**
@@ -62,6 +80,9 @@ class ClienteController extends Controller
      */
     public function destroy(Cliente $cliente)
     {
-        //
+        $cliente->delete();
+
+        return redirect()->route('clientes.index')->with('success','Cliente eliminado correctamente');
+
     }
 }
