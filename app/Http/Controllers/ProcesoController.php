@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cliente;
 use App\Models\Proceso;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,8 @@ class ProcesoController extends Controller
      */
     public function index()
     {
-        //
+        $procesos = Proceso::with('producto')->latest()->paginate(10);
+        return view('Procesos.ProcesosIndex', compact('procesos'));
     }
 
     /**
@@ -20,7 +22,8 @@ class ProcesoController extends Controller
      */
     public function create()
     {
-        //
+        $clientes = Cliente::all();
+        return view('Procesos.ProcesosForm', compact('clientes'));
     }
 
     /**
