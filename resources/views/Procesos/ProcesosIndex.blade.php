@@ -33,41 +33,42 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th class="text-sm font-semibold text-gray-600" >ID</th>
-                    <th class="text-sm font-semibold text-gray-600" >Cliente</th>
-                    <th class="text-sm font-semibold text-gray-600" >Marca</th>
-                    <th class="text-sm font-semibold text-gray-600" >Modelo</th>
-                    <th class="text-sm font-semibold text-gray-600" >Falla</th>
-                    <th class="text-sm font-semibold text-gray-600" >Descripcion</th>
-                    <th class="text-sm font-semibold text-gray-600" >Estado</th>
-                    <th class="text-sm font-semibold text-gray-600" >Fecha de ingreso</th>
-                    <th class="text-sm font-semibold text-gray-600" >Fecha de entrega</th>
-                    <th class="text-sm font-semibold text-gray-600" >Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($procesos as $proceso)
-                    <tr>
-                        <td>{{ $proceso->id }}</td>
-                        <td>{{ $proceso->cliente->nombre }}</td>
-                        <td>{{ $proceso->marca->nombre }}</td>
-                        <td>{{ $proceso->modelo->nombre }}</td>
-                        <td>{{ $proceso->falla }}</td>
-                        <td>{{ $proceso->descripcion }}</td>
-                        <td>
-                                @if ($proceso->estado)
-                                    <span class="badge badge-success">Activo</span>
-                                @else
-                                    <span class="badge badge-error">Inactivo</span>
-                                @endif
-                            </td>
-                        <td>{{ $proceso->fecha_inicio->format('Y-m-d') }}</td>
-                        <td>
-                            @if($proceso->fecha_cierre)
-                                {{ $proceso->fecha_cierre->format('Y-m-d') }}
-                            @else
-                                Pendiente
-                            @endif
+                <th class="whitespace-nowrap text-sm font-semibold text-gray-600">ID</th>
+                <th class="whitespace-nowrap text-sm font-semibold text-gray-600">Cliente</th>
+                <th class="whitespace-nowrap text-sm font-semibold text-gray-600">Marca</th>
+                <th class="whitespace-nowrap text-sm font-semibold text-gray-600">Modelo</th>
+                <th class="whitespace-nowrap text-sm font-semibold text-gray-600">Falla</th>
+                <th class="whitespace-nowrap text-sm font-semibold text-gray-600">Descripcion</th>
+                <th class="whitespace-nowrap text-sm font-semibold text-gray-600">Estado</th>
+                <th class="whitespace-nowrap text-sm font-semibold text-gray-600">Fecha de ingreso</th>
+                <th class="whitespace-nowrap text-sm font-semibold text-gray-600">Fecha de entrega</th>
+                <th class="whitespace-nowrap text-sm font-semibold text-gray-600">Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse($procesos as $proceso)
+                <tr>
+                    <td class=" whitespace-nowrap ">{{ $proceso->id }}</td>
+                    <td class=" whitespace-nowrap ">{{ $proceso->cliente->nombre }}</td>
+                    <td class=" whitespace-nowrap ">{{ $proceso->marca->nombre }}</td>
+                    <td class=" whitespace-nowrap ">{{ $proceso->modelo->nombre }}</td>
+                    <td class=" whitespace-nowrap ">{{ $proceso->falla }}</td>
+                    <td class=" whitespace-nowrap ">{{ $proceso->descripcion }}</td>
+                    <td class=" whitespace-nowrap ">
+                        @if ($proceso->estado)
+                            <span class="badge badge-success">Activo</span>
+                        @else
+                            <span class="badge badge-error">Inactivo</span>
+                        @endif
+                    </td>
+                    <td class="whitespace-nowrap">{{ $proceso->fecha_inicio->format('Y-m-d') }}</td>
+                    <td class="whitespace-nowrap">
+                        @if($proceso->fecha_cierre)
+                            {{ $proceso->fecha_cierre->format('Y-m-d') }}
+                        @else
+                            Pendiente
+                        @endif
+
                         </td><td class="flex flex-col sm:flex-row gap-1">
                             <a href="{{ route('procesos.show', $proceso->id) }}" class="font-bold btn-sm btn btn-outline btn-info">Ver evidencias</a>
                             <a href="{{ route('procesos.edit', $proceso->id) }}" class="font-bold btn-sm btn btn-outline btn-warning">Editar</a>
