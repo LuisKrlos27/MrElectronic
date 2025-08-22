@@ -9,8 +9,14 @@ class Proceso extends Model
     protected $table = 'procesos';
 
     protected $fillable = [
-        'producto_id', 'descripcion', 'estado',
-        'fecha_inicio', 'fecha_cierre'
+        'cliente_id',
+        'marca_id',
+        'modelo_id',
+        'falla',
+        'descripcion',
+        'estado',
+        'fecha_inicio',
+        'fecha_cierre',
     ];
 
     protected $casts = [
@@ -19,11 +25,25 @@ class Proceso extends Model
         'fecha_cierre' => 'datetime',
     ];
 
-    public function producto()
+    // Relación con Cliente
+    public function cliente()
     {
-        return $this->belongsTo(Producto::class, 'producto_id');
+        return $this->belongsTo(Cliente::class, 'cliente_id');
     }
 
+    // Relación con Marca
+    public function marca()
+    {
+        return $this->belongsTo(Marca::class, 'marca_id');
+    }
+
+    // Relación con Modelo
+    public function modelo()
+    {
+        return $this->belongsTo(Modelo::class, 'modelo_id');
+    }
+
+    // Relación con Evidencias
     public function evidencias()
     {
         return $this->hasMany(Evidencia::class, 'proceso_id');

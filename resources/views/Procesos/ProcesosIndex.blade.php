@@ -2,6 +2,23 @@
 @extends('welcome')
 
 @section('content')
+<!-- Mensajes de éxito y error -->
+@if (session('success'))
+    <div id="success-alert" class="alert alert-success shadow-lg mb-4 md:col-span-4 transition-opacity duration-500">
+        <div>
+            <span>{{ session('success') }}</span>
+        </div>
+    </div>
+@endif
+
+@if (session('error'))
+    <div id="error-alert" class="alert alert-error shadow-lg mb-4 md:col-span-4 transition-opacity duration-500">
+        <div>
+            <span>{{ session('error') }}</span>
+        </div>
+    </div>
+@endif
+
 <div class="max-w-6xl mx-auto mt-10 bg-base-100 p-8 rounded-lg shadow-lg">
     <h2 class="text-3xl font-bold text-center text-primary mb-8">LISTADO DE PROCESOS</h2>
 
@@ -12,33 +29,52 @@
     @if($procesos->isEmpty())
         <p class="text-center text-gray-600">No hay procesos registrados.</p>
     @else
-        <table class="table table-bordered table-hover">
-            <thead class="table-dark">
+    <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
+        <table class="table">
+            <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th>Fecha</th>
-                    <th>Acciones</th>
+                    <th class="text-sm font-semibold text-gray-600" >ID</th>
+                    <th class="text-sm font-semibold text-gray-600" >Cliente</th>
+                    <th class="text-sm font-semibold text-gray-600" >Marca</th>
+                    <th class="text-sm font-semibold text-gray-600" >Modelo</th>
+                    <th class="text-sm font-semibold text-gray-600" >Falla</th>
+                    <th class="text-sm font-semibold text-gray-600" >Descripcion</th>
+                    <th class="text-sm font-semibold text-gray-600" >Estado</th>
+                    <th class="text-sm font-semibold text-gray-600" >Fecha de ingreso</th>
+                    <th class="text-sm font-semibold text-gray-600" >Fecha de entrega</th>
+                    <th class="text-sm font-semibold text-gray-600" >Opciones</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse($procesos as $proceso)
                     <tr>
                         <td>{{ $proceso->id }}</td>
-                        <td>{{ $proceso->nombre }}</td>
+                        <td>{{ $proceso->cliente->nombre }}</td>
+                        <td>{{ $proceso->marca->nombre }}</td>
+                        <td>{{ $proceso->modelo->nombre }}</td>
+                        <td>{{ $proceso->falla }}</td>
                         <td>{{ $proceso->descripcion }}</td>
-                        <td>{{ $proceso->created_at->format('Y-m-d') }}</td>
                         <td>
-                            <a href="{{ route('procesos.show', $proceso) }}" class="btn btn-info btn-sm">Ver</a>
-                            <a href="{{ route('procesos.edit', $proceso) }}" class="btn btn-warning btn-sm">Editar</a>
-                            <form action="{{ route('procesos.destroy', $proceso) }}" method="POST" class="d-inline">
+                                @if ($proceso->estado)
+                                    <span class="badge badge-success">Activo</span>
+                                @else
+                                    <span class="badge badge-error">Inactivo</span>
+                                @endif
+                            </td>
+                        <td>{{ $proceso->fecha_inicio->format('Y-m-d') }}</td>
+                        <td>
+                            @if($proceso->fecha_cierre)
+                                {{ $proceso->fecha_cierre->format('Y-m-d') }}
+                            @else
+                                Pendiente
+                            @endif
+                        </td><td class="flex flex-col sm:flex-row gap-1">
+                            <a href="{{ route('procesos.show', $proceso->id) }}" class="font-bold btn-sm btn btn-outline btn-info">Ver evidencias</a>
+                            <a href="{{ route('procesos.edit', $proceso->id) }}" class="font-bold btn-sm btn btn-outline btn-warning">Editar</a>
+                            <form action="{{ route('procesos.destroy', $proceso->id) }}" method="POST" onsubmit="return confirm('¿Estas seguro de eliminar este producto?')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm"
-                                    onclick="return confirm('¿Estás seguro de eliminar este proceso?')">
-                                    Eliminar
-                                </button>
+                                <button class="font-bold btn-sm btn btn-outline btn-error" type="submit">Eliminar</button>
                             </form>
                         </td>
                     </tr>
@@ -49,6 +85,23 @@
                 @endforelse
             </tbody>
         </table>
+    </div>
     @endif
 </div>
+<!-- Script para ocultar alertas -->
+<script>
+    setTimeout(() => {
+        const success = document.getElementById('success-alert');
+        const error = document.getElementById('error-alert');
+
+        if (success) {
+            success.style.opacity = '0';
+            setTimeout(() => success.remove(), 500);
+        }
+        if (error) {
+            error.style.opacity = '0';
+            setTimeout(() => error.remove(), 500);
+        }
+    }, 3000);
+</script>
 @endsection

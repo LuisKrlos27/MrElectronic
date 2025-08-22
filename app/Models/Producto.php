@@ -9,7 +9,7 @@ class Producto extends Model
     protected $table = 'productos';
 
     protected $fillable = [
-        'tipo_id',       
+        'tipo_id',
         'marca_id',
         'modelo_id',
         'pulgada_id',

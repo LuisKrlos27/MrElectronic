@@ -1,7 +1,8 @@
+{{-- resources/views/procesos/create.blade.php --}}
 @extends('welcome')
 @section('content')
 
-<div class="max-w-3xl mx-auto mt-10 bg-base-100 p-6 rounded shadow">
+<div class="max-w-2xl mx-auto mt-10 bg-base-100 p-6 rounded shadow">
     <h2 class="text-2xl text-center font-bold mb-8 text-primary">REGISTRO DE PROCESOS</h2>
 
     <form action="{{ route('procesos.store') }}" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -10,79 +11,89 @@
         <!-- Cliente -->
         <div class="md:col-span-2">
             <label class="text-sm font-semibold text-gray-600">Cliente</label>
-            <select name="cliente_id" id="cliente_id" class="select select-bordered w-full" required>
+            <select name="cliente_id" id="cliente_id" class="select select-bordered w-full">
                 <option value="">Selecciona un cliente</option>
-                @foreach($clientes as $cli)
-                    <option value="{{ $cli->id }}">{{ $cli->nombre }}</option>
+                @foreach($clientes as $cliente)
+                    <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
                 @endforeach
                 <option value="nuevo">+ Agregar nuevo cliente</option>
             </select>
         </div>
-        <!-- Campos para nuevo cliente -->
-        <div id="nuevo_cliente_fields" class="md:col-span-2 hidden grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+
+        <!-- FORMULARIO DE NUEVO CLIENTE -->
+        <div id="nuevo_cliente_form" class="hidden md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6 mt-4 border-t pt-4">
+            <h3 class="text-lg font-bold text-primary md:col-span-2">Nuevo Cliente</h3>
+
             <div>
                 <label class="text-sm font-semibold text-gray-600">Nombre</label>
-                <input type="text" name="nuevo_cliente_nombre" class="input input-bordered w-full" placeholder="Nombre completo">
+                <input type="text" name="nuevo_cliente_nombre" class="input input-bordered w-full">
             </div>
+
             <div>
                 <label class="text-sm font-semibold text-gray-600">Documento</label>
-                <input type="text" name="nuevo_cliente_documento" class="input input-bordered w-full" placeholder="DNI, Cédula, etc.">
+                <input type="number" name="nuevo_cliente_documento" class="input input-bordered w-full">
             </div>
+
             <div>
                 <label class="text-sm font-semibold text-gray-600">Teléfono</label>
-                <input type="text" name="nuevo_cliente_telefono" class="input input-bordered w-full" placeholder="Ej: +58 424-1234567">
+                <input type="number" name="nuevo_cliente_telefono" class="input input-bordered w-full">
             </div>
+
             <div>
                 <label class="text-sm font-semibold text-gray-600">Dirección</label>
-                <input type="text" name="nuevo_cliente_direccion" class="input input-bordered w-full" placeholder="Dirección completa">
+                <input type="text" name="nuevo_cliente_direccion" class="input input-bordered w-full">
             </div>
+
+            <h3 class="text-lg font-bold text-primary md:col-span-2">Seguimiento del proceso</h3>
         </div>
-        
+
         <!-- Marca -->
         <div>
             <label class="text-sm font-semibold text-gray-600">Marca</label>
-            <input type="text" name="marca" class="input input-bordered w-full"
-                value="{{ old('marca') }}" placeholder="Ejemplo: Samsung, LG, Sony" required>
+            <select name="marca_id" id="marca_id" class="select select-bordered w-full">
+                <option value="">Selecciona una marca</option>
+                @foreach($marcas as $marca)
+                    <option value="{{ $marca->id }}">{{ $marca->nombre }}</option>
+                @endforeach
+                <option value="nueva">+ Agregar nueva marca</option>
+            </select>
+            <input type="text" name="nueva_marca" id="nueva_marca" class="input input-bordered w-full mt-2 hidden" placeholder="Escribe la nueva marca">
         </div>
 
         <!-- Modelo -->
         <div>
             <label class="text-sm font-semibold text-gray-600">Modelo</label>
-            <input type="text" name="modelo" class="input input-bordered w-full"
-                value="{{ old('modelo') }}" placeholder="Ejemplo: QN90C, CX, Crystal UHD" required>
+            <select name="modelo_id" id="modelo_id" class="select select-bordered w-full">
+                <option value="">Selecciona un modelo</option>
+                @foreach($modelos as $modelo)
+                    <option value="{{ $modelo->id }}">{{ $modelo->nombre }}</option>
+                @endforeach
+                <option value="nuevo">+ Agregar nuevo modelo</option>
+            </select>
+            <input type="text" name="nuevo_modelo" id="nuevo_modelo" class="input input-bordered w-full mt-2 hidden" placeholder="Escribe el nuevo modelo">
         </div>
 
-        <!-- Pulgadas -->
-        <div>
-            <label class="text-sm font-semibold text-gray-600">Pulgadas</label>
-            <input type="number" name="pulgadas" class="input input-bordered w-full"
-                value="{{ old('pulgadas') }}" placeholder="Ejemplo: 55" required>
-        </div>
-
-        <!-- Descripción de Falla -->
+        <!-- Falla -->
         <div class="md:col-span-2">
-            <label class="text-sm font-semibold text-gray-600">Descripción de la Falla</label>
-            <textarea name="descripcion_falla" class="textarea textarea-bordered w-full"
-                placeholder="Ejemplo: No enciende, líneas horizontales, sonido sin imagen..." required>{{ old('descripcion_falla') }}</textarea>
+            <label class="text-sm font-semibold text-gray-600">Falla</label>
+            <input type="text" name="falla" class="input input-bordered w-full" value="{{ old('falla') }}" required>
         </div>
 
-        <!-- Fecha Inicio -->
-        <div>
-            <label class="text-sm font-semibold text-gray-600">Fecha de Inicio</label>
-            <input type="date" name="fecha_inicio" class="input input-bordered w-full"
-                value="{{ old('fecha_inicio', now()->format('Y-m-d')) }}" required>
+        <!-- Descripción -->
+        <div class="md:col-span-2">
+            <label class="text-sm font-semibold text-gray-600">Descripción</label>
+            <textarea name="descripcion" class="textarea font-semibold text-gray-600 w-full" placeholder="Descripción del problema">{{ old('descripcion') }}</textarea>
         </div>
 
         <!-- Estado -->
-        <div>
+        <div class="md:col-span-2">
             <label class="text-sm font-semibold text-gray-600">Estado</label>
-            <select name="estado" class="select select-bordered w-full" required>
+            <select name="estado" class="select select-bordered w-full">
                 <option value="1" {{ old('estado') == 1 ? 'selected' : '' }}>Abierto</option>
                 <option value="0" {{ old('estado') == 0 ? 'selected' : '' }}>Cerrado</option>
             </select>
         </div>
 
-        <!-- Botones -->
         <div class="md:col-span-2 flex justify-center gap-4 pt-4">
             <a href="{{ route('procesos.index') }}" class="btn btn-warning">Cancelar</a>
             <button type="submit" class="btn btn-primary">Guardar</button>
@@ -91,11 +102,19 @@
 </div>
 
 <script>
-    // Mostrar/ocultar campos de nuevo cliente
-    function toggleNuevoCliente(select) {
-        const fields = document.getElementById('nuevo_cliente_fields');
-        fields.classList.toggle('hidden', select.value !== 'nuevo');
-    }
-</script>
+    // Cliente
+    document.getElementById('cliente_id').addEventListener('change', function() {
+        document.getElementById('nuevo_cliente_form').classList.toggle('hidden', this.value !== 'nuevo');
+    });
 
+    // Marca
+    document.getElementById('marca_id').addEventListener('change', function() {
+        document.getElementById('nueva_marca').classList.toggle('hidden', this.value !== 'nueva');
+    });
+
+    // Modelo
+    document.getElementById('modelo_id').addEventListener('change', function() {
+        document.getElementById('nuevo_modelo').classList.toggle('hidden', this.value !== 'nuevo');
+    });
+</script>
 @endsection

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('evidencias', function (Blueprint $table) {
             $table->id();
             $table->foreignId('proceso_id')->constrained('procesos')->onDelete('cascade');
-            $table->string('imagen', 255);
+            $table->string('imagen', 255); // ruta o nombre del archivo
             $table->text('comentario')->nullable();
             $table->timestamps();
         });

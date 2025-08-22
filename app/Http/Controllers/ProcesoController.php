@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Marca;
+use App\Models\Modelo;
 use App\Models\Cliente;
 use App\Models\Proceso;
 use Illuminate\Http\Request;
@@ -13,8 +15,11 @@ class ProcesoController extends Controller
      */
     public function index()
     {
-        $procesos = Proceso::with('producto')->latest()->paginate(10);
-        return view('Procesos.ProcesosIndex', compact('procesos'));
+        $clientes = Cliente::all();
+        $procesos = Proceso::all();
+        $marcas = Marca::all();
+        $modelos = Modelo::all();
+        return view('Procesos.ProcesosIndex', compact('clientes','procesos','marcas','modelos'));
     }
 
     /**
@@ -22,8 +27,11 @@ class ProcesoController extends Controller
      */
     public function create()
     {
+        $procesos = Proceso::all();
         $clientes = Cliente::all();
-        return view('Procesos.ProcesosForm', compact('clientes'));
+        $marcas = Marca::all();
+        $modelos = Modelo::all();
+        return view('Procesos.ProcesosForm', compact('clientes','procesos','marcas','modelos'));
     }
 
     /**
@@ -31,7 +39,68 @@ class ProcesoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+            $request->validate([
+            'cliente_id' => 'required',
+            'marca_id'   => 'required',
+            'modelo_id'  => 'required',
+            'falla'      => 'required|string|max:255',
+            'estado'     => 'required|in:0,1',
+        ]);
+
+        // ==============================
+        // 1. Cliente
+        // ==============================
+        if ($request->cliente_id === "nuevo") {
+            $cliente = Cliente::create([
+                'nombre'     => $request->nuevo_cliente_nombre,
+                'documento'  => $request->nuevo_cliente_documento,
+                'telefono'   => $request->nuevo_cliente_telefono,
+                'direccion'  => $request->nuevo_cliente_direccion,
+            ]);
+            $cliente_id = $cliente->id;
+        } else {
+            $cliente_id = $request->cliente_id;
+        }
+
+        // ==============================
+        // 2. Marca
+        // ==============================
+        if ($request->marca_id === "nueva") {
+            $marca = Marca::create([
+                'nombre' => $request->nueva_marca,
+            ]);
+            $marca_id = $marca->id;
+        } else {
+            $marca_id = $request->marca_id;
+        }
+
+        // ==============================
+        // 3. Modelo
+        // ==============================
+        if ($request->modelo_id === "nuevo") {
+            $modelo = Modelo::create([
+                'nombre'   => $request->nuevo_modelo,
+                'marca_id' => $marca_id, // relacionar modelo con su marca
+            ]);
+            $modelo_id = $modelo->id;
+        } else {
+            $modelo_id = $request->modelo_id;
+        }
+
+        // ==============================
+        // 4. Guardar el Proceso
+        // ==============================
+        Proceso::create([
+            'cliente_id'  => $cliente_id,
+            'marca_id'    => $marca_id,
+            'modelo_id'   => $modelo_id,
+            'falla'       => $request->falla,
+            'descripcion' => $request->descripcion,
+            'estado'      => $request->estado,
+        ]);
+
+        return redirect()->route('procesos.index')->with('success', 'Proceso registrado correctamente.');
+
     }
 
     /**
