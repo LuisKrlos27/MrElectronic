@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Evidencia;
+use App\Models\Proceso;
 use Illuminate\Http\Request;
 
 class EvidenciaController extends Controller
@@ -26,11 +27,27 @@ class EvidenciaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, $proceso_id )
     {
-        //
-    }
+        $request->validate([
+        'imagenes.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'comentarios.*' => 'nullable|string',
+        ]);
 
+        if($request->hasFile('imagenes')) {
+            foreach($request->file('imagenes') as $index => $imagen) {
+                $path = $imagen->store('evidencias', 'public');
+
+                Evidencia::create([
+                    'proceso_id' => $proceso_id,
+                    'imagen' => $path,
+                    'comentario' => $request->comentarios[$index] ?? null,
+                ]);
+            }
+        }
+
+        return back()->with('success', 'Evidencias registradas correctamente.');
+    }
     /**
      * Display the specified resource.
      */
@@ -60,6 +77,8 @@ class EvidenciaController extends Controller
      */
     public function destroy(Evidencia $evidencia)
     {
-        //
+        $evidencia->delete();
+
+        return redirect()->back()->with('success','Evidencia eliminada correctamente.');
     }
 }

@@ -108,7 +108,11 @@ class ProcesoController extends Controller
      */
     public function show(Proceso $proceso)
     {
-        //
+        // Cargamos el cliente, marca, modelo y evidencias
+        $proceso->load(['cliente', 'marca', 'modelo', 'evidencias']);
+
+        return view('Procesos.EvidenciasShow', compact('proceso'));
+
     }
 
     /**

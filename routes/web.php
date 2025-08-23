@@ -24,3 +24,6 @@ Route::resource('clientes', ClienteController::class);
 Route::resource('ventas', VentaController::class);
 Route::resource('detalleVentas', DetalleVenta::class);
 
+Route::post('procesos/{proceso}/evidencias', [EvidenciaController::class, 'store'])->name('evidencias.store');
+
+
