@@ -92,8 +92,8 @@
         </div>
 
         <div class="md:col-span-2 flex justify-center gap-4 pt-4">
-            <a href="{{ route('productos.index') }}" class="btn btn-warning">Cancelar</a>
-            <button type="submit" class="btn btn-primary">Actualizar</button>
+            <a href="{{ route('productos.index') }}" class="btn btn-outline btn-warning">Cancelar</a>
+            <button type="submit" class="btn btn-outline btn-primary">Actualizar</button>
         </div>
     </form>
 </div>

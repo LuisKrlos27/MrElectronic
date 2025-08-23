@@ -9,6 +9,7 @@
         <h2 class="text-xl font-semibold text-info border-b-2 border-gray-300 pb-2 mb-4">
             Datos del proceso #{{ $proceso->id }}
         </h2>
+
         <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
             <table class="table">
                 <thead>

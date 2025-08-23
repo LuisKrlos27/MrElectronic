@@ -1,61 +1,94 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 👨🏼‍🔧 MR ELECTRONICS
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> *MR Electrónics es un sistema web moderno para negocios de electrónica que integra inventario, ventas y reparaciones en una sola plataforma eficiente y segura. 🚀*
 
-## About Laravel
+MR Electrónics es un sistema web integral desarrollado en Laravel con PostgreSQL, diseñado para optimizar la gestión de inventario, ventas y reparaciones de equipos electrónicos. Su interfaz moderna y responsiva, potenciada con DaisyUI, permite un manejo ágil de productos, clientes y servicios, incluyendo la creación dinámica de registros sin interrumpir los flujos de trabajo. El sistema ofrece un control completo de inventario, permitiendo registrar productos con atributos detallados como tipo, marca, modelo, precio, número de pieza y descripción, así como gestionar clientes y su historial de compras. Las ventas se registran con detalle y permiten generar facturas electrónicas, mientras que los procesos de reparación incorporan seguimiento completo de equipos, registro de fallas, comentarios técnicos y evidencias fotográficas. MR Electrónics garantiza eficiencia operativa, trazabilidad de información y escalabilidad, posicionándose como una solución confiable y moderna para negocios dedicados a la venta y mantenimiento de productos electrónicos.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🎯 Objetivos
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Optimizar la gestión de inventario de productos electrónicos, asegurando control de stock y trazabilidad de cada artículo.
+- Facilitar el registro y seguimiento de ventas y facturación de manera eficiente y confiable.
+- Gestionar procesos de reparación con registro de fallas, seguimiento de clientes y evidencias de trabajos realizados.
+- Proporcionar una interfaz intuitiva y dinámica que agilice los procesos administrativos del negocio.
+- Garantizar escalabilidad y seguridad en la gestión de información empresarial.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 🎯 Misión
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Proveer una plataforma tecnológica integral que permita a negocios de electrónica gestionar inventario, ventas y reparaciones de manera eficiente, segura y moderna, optimizando los procesos internos y mejorando la experiencia de clientes y colaboradores.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## 🎯 Visión
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Ser la solución líder en sistemas de gestión para negocios de electrónica en la región, reconocida por su innovación, confiabilidad y capacidad de adaptación a las necesidades de los usuarios, contribuyendo a la transformación digital de pequeñas y medianas empresas.
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+# 👨🏼‍💻 Tecnologías utilizadas
 
-## Contributing
+- ![Laravel](https://img.shields.io/badge/Laravel-10-red)
+- ![PHP](https://img.shields.io/badge/PHP-8.2-blue)
+- ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue)
+- ![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.3-teal)
+- ![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## ✨ Características clave
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- ✅ Registro completo de productos: tipo, marca, modelo, precio, número de pieza y descripción.
+- ✅ Gestión dinámica de clientes: crear clientes nuevos sin salir del flujo de ventas o inventario.
+- ✅ Control de inventario: seguimiento de stock en tiempo real.
+- ✅ Registro de ventas y facturación: visualización de facturas detalladas por cliente y producto.
+- ✅ Procesos de reparación: seguimiento completo de fallas, comentarios técnicos y evidencias fotográficas.
+- ✅ Interfaz responsiva y moderna: diseño intuitivo con DaisyUI, adaptable a cualquier dispositivo.
+- ✅ Escalable y seguro: preparado para crecer con el negocio y proteger la información.
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# 🖥️ Capturas de pantalla
 
-## License
+## Inventario
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Index de Productos
+
+![Index de Productos](public/image/Inventario/1755988447335.png)
+
+### Formulario de Registro 
+
+![Formulario de Registro de productos](public/image/Inventario/1755991642212.png)
+
+### Formulario de Edit
+
+![Vista de Editar productos](public/image/Inventario/1755989418351.png)
+
+## Ventas
+
+### Index de Ventas
+![Index de Ventas](public/image/Ventas/1755989998787.png)
+
+### Registro de ventas
+
+![Registro de ventas](public/image/Ventas/1755991964754.png)
+
+
+### Factura de ventas
+
+![Factura de ventas](public/image/Ventas/1755991567842.png)
+
+### Edit de ventas
+
+![Editar ventas](public/image/Ventas/1755992036058.png)
+
+## Procesos
+
+### Index de Procesos
+![Index de Procesos](public/image/Procesos/1755989614569.png)
+
+### Evidencias de Procesos
+![Evidencias de procesos](public/image/Procesos/1755989875247.png)
+

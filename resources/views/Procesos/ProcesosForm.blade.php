@@ -95,8 +95,8 @@
         </div>
 
         <div class="md:col-span-2 flex justify-center gap-4 pt-4">
-            <a href="{{ route('procesos.index') }}" class="btn btn-warning">Cancelar</a>
-            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="{{ route('procesos.index') }}" class="btn btn-outline btn-warning">Cancelar</a>
+            <button type="submit" class="btn btn-outline btn-primary">Guardar</button>
         </div>
     </form>
 </div>
