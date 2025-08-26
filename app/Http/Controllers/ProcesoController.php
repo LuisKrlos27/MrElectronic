@@ -156,4 +156,15 @@ class ProcesoController extends Controller
     {
         //
     }
+
+    /**
+     * Display an invoice for the specified resource.
+     */
+    public function factura(Proceso $proceso)
+    {
+        // The 'with' is important to load relationships
+        $proceso->load(['cliente', 'marca', 'modelo', 'pulgada']);
+
+        return view('Procesos.Factura', compact('proceso'));
+    }
 }

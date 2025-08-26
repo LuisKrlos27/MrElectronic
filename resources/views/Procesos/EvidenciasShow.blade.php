@@ -3,23 +3,33 @@
 
 @section('content')
 <div class="max-w-3xl mx-auto mt-10 bg-base-100 p-8 rounded-lg shadow-lg">
+    <header class="flex justify-between items-center mb-8">
+        <div>
+            <h1 class="text-3xl font-bold text-primary">PROCESO</h1>
+            <p class="text-gray-500">MR ELECTRONICS</p>
+        </div>
+        <div>
+            <p><strong>Fecha:</strong> {{ $proceso->fecha_inicio->format('d/m/Y') }}</p>
+            <p><strong>PROCESO #:</strong> FACPROC-{{ str_pad($proceso->id, 5, '0', STR_PAD_LEFT) }}</p>
+        </div>
+    </header>
 
     <!-- Datos del proceso -->
     <div class="mb-6">
         <h2 class="text-xl font-semibold text-info border-b-2 border-gray-300 pb-2 mb-4">
-            Datos del proceso #{{ $proceso->id }}
+            Datos del proceso
         </h2>
 
         <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Cliente</th>
-                        <th>Marca</th>
-                        <th>Modelo</th>
-                        <th>Pulgadas</th>
-                        <th>Falla</th>
-                        <th>Descripción</th>
+                        <th class="text-sm font-semibold text-gray-600">Cliente</th>
+                        <th class="text-sm font-semibold text-gray-600">Marca</th>
+                        <th class="text-sm font-semibold text-gray-600">Modelo</th>
+                        <th class="text-sm font-semibold text-gray-600">Pulgadas</th>
+                        <th class="text-sm font-semibold text-gray-600">Falla</th>
+                        <th class="text-sm font-semibold text-gray-600">Descripción</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -95,6 +105,11 @@
     <div class="mt-6 text-center">
         <a href="{{ route('procesos.index') }}" class="btn btn-outline btn-warning">← Volver al listado</a>
     </div>
+
+    <footer class="text-center text-gray-500 mt-12">
+        <p>Gracias por su confianza.</p>
+        <p>MR ELECTRONICS</p>
+    </footer>
 </div>
 
 {{-- Script para clonar formulario --}}
