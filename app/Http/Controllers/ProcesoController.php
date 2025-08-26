@@ -154,7 +154,9 @@ class ProcesoController extends Controller
      */
     public function destroy(Proceso $proceso)
     {
-        //
+        $proceso->delete();
+        
+        return redirect()->route('procesos.index')->with('success', 'Proceso eliminado correctamente.');
     }
 
     /**
