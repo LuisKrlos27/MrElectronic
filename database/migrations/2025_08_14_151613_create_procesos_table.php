@@ -23,6 +23,9 @@ return new class extends Migration
             // Relación con modelos
             $table->foreignId('modelo_id')->constrained('modelos')->onDelete('cascade');
 
+            //Relacion con pulgadas
+            $table->foreignId('pulgada_id')->constrained('pulgadas')->onDelete('cascade');
+            
             // Datos propios de la reparación
             $table->string('falla', 255);
             $table->text('descripcion')->nullable();

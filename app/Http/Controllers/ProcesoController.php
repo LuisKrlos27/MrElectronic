@@ -6,6 +6,7 @@ use App\Models\Marca;
 use App\Models\Modelo;
 use App\Models\Cliente;
 use App\Models\Proceso;
+use App\Models\Pulgada;
 use Illuminate\Http\Request;
 
 class ProcesoController extends Controller
@@ -16,10 +17,12 @@ class ProcesoController extends Controller
     public function index()
     {
         $clientes = Cliente::all();
-        $procesos = Proceso::all();
+        $procesos = Proceso::with(['cliente', 'marca', 'modelo', 'pulgada'])->get();
         $marcas = Marca::all();
         $modelos = Modelo::all();
-        return view('Procesos.ProcesosIndex', compact('clientes','procesos','marcas','modelos'));
+        $pulgadas = Pulgada::all();
+
+        return view('Procesos.ProcesosIndex', compact('clientes','procesos','marcas','modelos','pulgadas'));
     }
 
     /**
@@ -27,11 +30,13 @@ class ProcesoController extends Controller
      */
     public function create()
     {
-        $procesos = Proceso::all();
+        $procesos = Proceso::with(['cliente', 'marca', 'modelo', 'pulgada'])->get();
         $clientes = Cliente::all();
         $marcas = Marca::all();
         $modelos = Modelo::all();
-        return view('Procesos.ProcesosForm', compact('clientes','procesos','marcas','modelos'));
+        $pulgadas = Pulgada::all();
+
+        return view('Procesos.ProcesosForm', compact('clientes','procesos','marcas','modelos','pulgadas'));
     }
 
     /**
@@ -39,10 +44,11 @@ class ProcesoController extends Controller
      */
     public function store(Request $request)
     {
-            $request->validate([
+        $request->validate([
             'cliente_id' => 'required',
             'marca_id'   => 'required',
             'modelo_id'  => 'required',
+            'pulgada_id' => 'required',
             'falla'      => 'required|string|max:255',
             'estado'     => 'required|in:0,1',
         ]);
@@ -88,19 +94,31 @@ class ProcesoController extends Controller
         }
 
         // ==============================
-        // 4. Guardar el Proceso
+        // 4. Pulgada
+        // ==============================
+        if ($request->pulgada_id === 'nuevo') {
+            $pulgada = Pulgada::create([
+                'medida' => $request->nueva_pulgada,
+            ]);
+            $pulgada_id = $pulgada->id;
+        } else {
+            $pulgada_id = $request->pulgada_id;
+        }
+
+        // ==============================
+        // 5. Guardar el Proceso
         // ==============================
         Proceso::create([
             'cliente_id'  => $cliente_id,
             'marca_id'    => $marca_id,
             'modelo_id'   => $modelo_id,
+            'pulgada_id'  => $pulgada_id,
             'falla'       => $request->falla,
             'descripcion' => $request->descripcion,
             'estado'      => $request->estado,
         ]);
 
         return redirect()->route('procesos.index')->with('success', 'Proceso registrado correctamente.');
-
     }
 
     /**

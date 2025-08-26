@@ -17,6 +17,7 @@
                         <th>Cliente</th>
                         <th>Marca</th>
                         <th>Modelo</th>
+                        <th>Pulgadas</th>
                         <th>Falla</th>
                         <th>Descripción</th>
                     </tr>
@@ -26,6 +27,7 @@
                         <td>{{ $proceso->cliente->nombre }}</td>
                         <td>{{ $proceso->marca->nombre }}</td>
                         <td>{{ $proceso->modelo->nombre }}</td>
+                        <td>{{ $proceso->pulgada->medida }}</td>
                         <td>{{ $proceso->falla }}</td>
                         <td>{{ $proceso->descripcion }}</td>
                     </tr>

@@ -12,6 +12,7 @@ class Proceso extends Model
         'cliente_id',
         'marca_id',
         'modelo_id',
+        'pulgada_id',
         'falla',
         'descripcion',
         'estado',
@@ -42,6 +43,12 @@ class Proceso extends Model
     {
         return $this->belongsTo(Modelo::class, 'modelo_id');
     }
+
+    public function pulgada()
+    {
+        return $this->belongsTo(Pulgada::class, 'pulgada_id');
+    }
+
 
     // Relación con Evidencias
     public function evidencias()

@@ -37,6 +37,7 @@
                 <th class="whitespace-nowrap text-sm font-semibold text-gray-600">Cliente</th>
                 <th class="whitespace-nowrap text-sm font-semibold text-gray-600">Marca</th>
                 <th class="whitespace-nowrap text-sm font-semibold text-gray-600">Modelo</th>
+                <th class="whitespace-nowrap text-sm font-semibold text-gray-600">Pulgadas</th>
                 <th class="whitespace-nowrap text-sm font-semibold text-gray-600">Falla</th>
                 <th class="whitespace-nowrap text-sm font-semibold text-gray-600">Descripcion</th>
                 <th class="whitespace-nowrap text-sm font-semibold text-gray-600">Estado</th>
@@ -52,6 +53,7 @@
                     <td class=" whitespace-nowrap ">{{ $proceso->cliente->nombre }}</td>
                     <td class=" whitespace-nowrap ">{{ $proceso->marca->nombre }}</td>
                     <td class=" whitespace-nowrap ">{{ $proceso->modelo->nombre }}</td>
+                    <td class=" whitespace-nowrap ">{{ $proceso->pulgada?->medida ?? 'No asignada' }}</td>
                     <td class=" whitespace-nowrap ">{{ $proceso->falla }}</td>
                     <td class=" whitespace-nowrap ">{{ $proceso->descripcion }}</td>
                     <td class=" whitespace-nowrap ">

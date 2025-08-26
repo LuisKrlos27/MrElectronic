@@ -73,6 +73,19 @@
             <input type="text" name="nuevo_modelo" id="nuevo_modelo" class="input input-bordered w-full mt-2 hidden" placeholder="Escribe el nuevo modelo">
         </div>
 
+        <!-- Pulgadas -->
+        <div>
+            <label class="text-sm font-semibold text-gray-600">Pulgadas</label>
+            <select name="pulgada_id" id="pulgada_id" class="select select-bordered w-full">
+                <option value="">Selecciona una pulgada</option>
+                @foreach($pulgadas as $pulgada)
+                    <option value="{{ $pulgada->id }}">{{ $pulgada->medida }}</option>
+                @endforeach
+                <option value="nuevo">+ Agregar nueva pulgada</option>
+            </select>
+            <input type="text" name="nueva_pulgada" id="nueva_pulgada" class="input input-bordered w-full mt-2 hidden" placeholder="Escribe la nueva pulgada">
+        </div>
+
         <!-- Falla -->
         <div class="md:col-span-2">
             <label class="text-sm font-semibold text-gray-600">Falla</label>
@@ -115,6 +128,11 @@
     // Modelo
     document.getElementById('modelo_id').addEventListener('change', function() {
         document.getElementById('nuevo_modelo').classList.toggle('hidden', this.value !== 'nuevo');
+    });
+
+    //pulgada
+    document.getElementById('pulgada_id').addEventListener('change', function() {
+        document.getElementById('nueva_pulgada').classList.toggle('hidden', this.value !== 'nuevo');
     });
 </script>
 @endsection
