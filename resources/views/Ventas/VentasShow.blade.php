@@ -76,8 +76,8 @@
                 <tbody>
                     <tr>
                         <td class="text-sm font-semibold text-green-600">${{ number_format($venta->total,0,2) }}</td>
-                        <td class="text-sm font-semibold text-blue-600">${{ number_format($venta->pago,0,2) }}</td>
-                        <td class="text-sm font-semibold text-purple-600">${{ number_format($venta->cambio,0,2) }}</td>
+                        <td class="text-sm font-semibold text-gray-600">${{ number_format($venta->pago,0,2) }}</td>
+                        <td class="text-sm font-semibold text-blue-600">${{ number_format($venta->cambio,0,2) }}</td>
                     </tr>
                 </tbody>
             </table>

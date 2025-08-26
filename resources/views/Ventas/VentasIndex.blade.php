@@ -45,7 +45,7 @@
                         <tr>
                             <td>{{ $ven->id }}</td>
                             <td>{{ $ven->cliente->nombre ?? 'N/A' }}</td>
-                            <td>{{ $ven->fecha_venta ?? 'N/A' }}</td>
+                            <td>{{ $ven->fecha_venta->format('Y-m-d') ?? 'N/A' }}</td>
                             <td>${{ number_format($ven->pago,0,2) }}</td>
                             <td>${{ number_format($ven->total,0,2) }}</td>
                             <td class="flex flex-col sm:flex-row gap-1">

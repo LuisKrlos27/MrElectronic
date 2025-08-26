@@ -9,7 +9,7 @@ class Venta extends Model
     protected $table = 'ventas';
 
     // NO incluir 'cambio' en fillable: es columna GENERATED por Postgres
-    protected $fillable = ['cliente_id', 'fecha_venta', 'total', 'pago'];
+    protected $fillable = ['cliente_id', 'fecha_venta', 'total', 'pago','cambio'];
 
     protected $casts = [
         'fecha_venta' => 'datetime',

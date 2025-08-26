@@ -52,7 +52,7 @@
                             <td>{{ $pro->pulgada->medida ?? 'N/A' }}</td>
                             <td>{{ $pro->marca->nombre ?? 'N/A' }}</td>
                             <td>{{ $pro->modelo->nombre ?? 'N/A' }}</td>
-                            <td>{{ number_format($pro->precio, 2) }}</td>
+                            <td>{{ number_format($pro->precio,0, 2) }}</td>
                             <td>{{ $pro->cantidad }}</td>
                             <td>{{ $pro->numero_pieza ?? 'N/A' }}</td>
                             <td>{{ $pro->descripcion ?? 'N/A' }}</td>
