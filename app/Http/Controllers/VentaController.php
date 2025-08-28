@@ -6,6 +6,7 @@ use App\Models\Venta;
 use App\Models\Cliente;
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class VentaController extends Controller
 {
@@ -18,6 +19,13 @@ class VentaController extends Controller
         $cliente = Cliente::all();
 
         return view('Ventas.VentasIndex', compact('venta','cliente'));
+    }
+
+    public function factura(Venta $venta)
+    {
+        $venta->load(['cliente', 'detalles.producto']);
+        $pdf = Pdf::loadView('Ventas.VentasShow', compact('venta'));
+        return $pdf->download('factura-' . $venta->id . '.pdf');
     }
 
     /**

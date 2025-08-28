@@ -8,6 +8,7 @@ use App\Models\Cliente;
 use App\Models\Proceso;
 use App\Models\Pulgada;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ProcesoController extends Controller
 {
@@ -155,7 +156,7 @@ class ProcesoController extends Controller
     public function destroy(Proceso $proceso)
     {
         $proceso->delete();
-        
+
         return redirect()->route('procesos.index')->with('success', 'Proceso eliminado correctamente.');
     }
 
@@ -168,5 +169,12 @@ class ProcesoController extends Controller
         $proceso->load(['cliente', 'marca', 'modelo', 'pulgada']);
 
         return view('Procesos.Factura', compact('proceso'));
+    }
+
+    public function imprimirFactura(Proceso $proceso)
+    {
+        $proceso->load(['cliente', 'marca','modelo','pulgada']);
+        $pdf = Pdf::loadView('procesos.Factura', compact('proceso'));
+        return $pdf->download('factura-' . $proceso->id . '.pdf');
     }
 }

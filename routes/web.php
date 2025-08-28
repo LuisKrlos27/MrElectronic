@@ -27,3 +27,6 @@ Route::resource('detalleVentas', DetalleVenta::class);
 Route::post('procesos/{proceso}/evidencias', [EvidenciaController::class, 'store'])->name('evidencias.store');
 
 Route::get('procesos/{proceso}/factura', [ProcesoController::class, 'factura'])->name('procesos.factura');
+Route::get('ventas/{venta}/factura', [VentaController::class, 'factura'])->name('ventas.factura');
+Route::get('procesos/{proceso}/imprimirFactura', [ProcesoController::class, 'imprimirFactura'])->name('procesos.imprimirFactura');
+

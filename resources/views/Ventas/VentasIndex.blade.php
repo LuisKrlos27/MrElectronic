@@ -50,6 +50,7 @@
                             <td>${{ number_format($ven->total,0,2) }}</td>
                             <td class="flex flex-col sm:flex-row gap-1">
                                 <a href="{{ route('ventas.show', $ven->id) }}" class="font-bold btn-sm btn btn-outline btn-info">Ver factura</a>
+                                <a href="{{ route('ventas.factura', $ven->id) }}" class="font-bold btn-sm btn btn-outline btn-primary">Imprimir</a>
                                 <a href="{{ route('ventas.edit', $ven->id) }}" class="font-bold btn-sm btn btn-outline btn-warning">Editar</a>
                                 {{-- <form action="{{ route('ventas.destroy', $ven->id) }}" method="POST" onsubmit="return confirm('¿Estas seguro de eliminar este producto?')">
                                     @csrf

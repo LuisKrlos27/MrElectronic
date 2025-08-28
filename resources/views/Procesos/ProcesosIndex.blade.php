@@ -73,13 +73,14 @@
 
                         </td><td class="flex flex-col sm:flex-row gap-1">
                             <a href="{{ route('procesos.show', $proceso->id) }}" class="font-bold btn-sm btn btn-outline btn-info">Ver evidencias</a>
-                            <a href="{{ route('procesos.factura', $proceso->id) }}" class="font-bold btn-sm btn btn-outline btn-primary">Factura</a>
+                            <a href="{{ route('procesos.factura', $proceso->id) }}" class="font-bold btn-sm btn btn-outline">Factura</a>
+                            <a href="{{ route('procesos.imprimirFactura', $proceso->id) }}" class="font-bold btn-sm btn btn-outline btn-primary">Imprimir</a>
                             <a href="{{ route('procesos.edit', $proceso->id) }}" class="font-bold btn-sm btn btn-outline btn-warning">Editar</a>
-                            <form action="{{ route('procesos.destroy', $proceso->id) }}" method="POST" onsubmit="return confirm('¿Estas seguro de eliminar este producto?')">
+                            {{-- <form action="{{ route('procesos.destroy', $proceso->id) }}" method="POST" onsubmit="return confirm('¿Estas seguro de eliminar este producto?')">
                                 @csrf
                                 @method('DELETE')
                                 <button class="font-bold btn-sm btn btn-outline btn-error" type="submit">Eliminar</button>
-                            </form>
+                            </form> --}}
                         </td>
                     </tr>
                 @empty
