@@ -25,7 +25,7 @@ class VentaController extends Controller
     {
         $venta->load(['cliente', 'detalles.producto']);
         $pdf = Pdf::loadView('Ventas.VentasShow', compact('venta'));
-        return $pdf->download('factura-' . $venta->id . '.pdf');
+        return $pdf->download('FACVENT-' . str_pad($venta->id, 5, '0', STR_PAD_LEFT) . '.pdf');
     }
 
     /**

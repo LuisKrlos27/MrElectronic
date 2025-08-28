@@ -175,6 +175,6 @@ class ProcesoController extends Controller
     {
         $proceso->load(['cliente', 'marca','modelo','pulgada']);
         $pdf = Pdf::loadView('procesos.Factura', compact('proceso'));
-        return $pdf->download('factura-' . $proceso->id . '.pdf');
+        return $pdf->download('FACPRO-' . str_pad($proceso->id, 5, '0', STR_PAD_LEFT) . '.pdf');
     }
 }
